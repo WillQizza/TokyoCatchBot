@@ -1,0 +1,28 @@
+{
+  "name": "blinkblonkcranebot",
+  "version": "1.0.0",
+  "description": "TokyoCatch API/Discord bot to track how many plays occur for various crane games",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WillQizza/BoinkBlonkCraneBot.git"
+  },
+  "author": "William Qi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WillQizza/BoinkBlonkCraneBot/issues"
+  },
+  "homepage": "https://github.com/WillQizza/BoinkBlonkCraneBot#readme",
+  "dependencies": {
+    "discord.js": "^13.7.0",
+    "mariadb": "^3.0.0",
+    "sequelize": "^6.19.0",
+    "ws": "^8.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
