@@ -7,7 +7,7 @@ class SubscriptionEvent {
     }
 
     getId() {
-        return this.id;
+        return this._id;
     }
 
     getStatus() {

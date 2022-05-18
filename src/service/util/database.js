@@ -1,8 +1,6 @@
 const { database } = require('../../../config.json');
 const { Sequelize, DataTypes } = require('sequelize');
 
-console.log(database);
-
 const db = new Sequelize(database.name, database.username, database.password, {
     host: database.host,
     port: database.port,
@@ -12,10 +10,9 @@ const db = new Sequelize(database.name, database.username, database.password, {
         min: 0,
         acquire: 30000,
         idle: 10000
-    }
+    },
+    logging: false
 });
-
-db.authenticate().then(() => console.log('not broken'));
 
 // The subscriptions to log events for
 const SubscribedSubscriptions = db.define('SubscribedSubscriptions', {
@@ -29,23 +26,19 @@ const SubscribedSubscriptions = db.define('SubscribedSubscriptions', {
         type: DataTypes.CHAR(24),
         allowNull: false
     },
-    guildId: {
+    userId: {
         type: DataTypes.CHAR(19),
         allowNull: false
     },
-    channelId: {
-        type: DataTypes.CHAR(19),
-        allowNull: false
-    },
-    token: {
-        type: DataTypes.CHAR(255),
+    alertAtCount: {
+        type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
     indexes: [
         {
             unique: true,
-            fields: ['subscription', 'guildId']
+            fields: ['subscription', 'userId']
         }
     ]
 });
@@ -57,7 +50,7 @@ const Plays = db.define('Plays', {
         primaryKey: true
     },
     lastWinPlayCount: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
     },
     plays: {
         type: DataTypes.INTEGER,
@@ -68,5 +61,9 @@ const Plays = db.define('Plays', {
 
 module.exports = {
     SubscribedSubscriptions,
-    Plays
+    Plays,
+    init: async () => {
+        await SubscribedSubscriptions.sync();
+        await Plays.sync();
+    }
 };
