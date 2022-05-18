@@ -1,7 +1,10 @@
+const { NotificationService } = require('./src/service/notifications');
 const { DiscordClient } = require('./src/bot/client');
 const { APIClient } = require('./src/api/client');
 
 const { bot : { token : BOT_TOKEN } } = require('./config.json');
+
+const service = new NotificationService();
 
 const apiClient = new APIClient();
 
