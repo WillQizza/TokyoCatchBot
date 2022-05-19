@@ -101,8 +101,16 @@ class NotificationService {
     async unregisterSubscription(userId, machineId) {
         return (await SubscribedSubscriptions.destroy({
             where: {
-                userId: userId,
+                userId,
                 subscription: machineId
+            }
+        })) > 0;
+    }
+
+    async unregisterAllSubscriptions(userId) {
+        return (await SubscribedSubscriptions.destroy({
+            where: {
+                userId
             }
         })) > 0;
     }

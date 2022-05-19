@@ -35,7 +35,7 @@ const discordClient = new DiscordClient();
 
 discordClient.on('interactionCreate', async interaction => {
     if (interaction.isCommand) {
-        const machineId = interaction.options.getString('machine_id').trim();
+        const machineId = (interaction.options.getString('machine_id') || '').trim();
         const plays = await service.getPlayCount(machineId);
         
         switch (interaction.commandName) {
@@ -45,12 +45,10 @@ discordClient.on('interactionCreate', async interaction => {
                 if (lastWinCount > 0) {
                     await interaction.reply({
                         content: `The provided machine \`${machineId}\` is at ${plays} plays.\nThe last win was at ${lastWinCount} plays.`,
-                        ephemeral: true
                     });
                 } else {
                     await interaction.reply({
                         content: `The provided machine \`${machineId}\` is at ${plays} plays.`,
-                        ephemeral: true
                     });
                 }
                 break;
@@ -84,6 +82,13 @@ discordClient.on('interactionCreate', async interaction => {
                         ephemeral: true
                     });
                 }
+                break;
+            case 'unsubscribe-all':
+                await service.unregisterAllSubscriptions(interaction.user.id);
+                await interaction.reply({
+                    content: `You are now unsubscribed from ALL machines.`,
+                    ephemeral: true
+                });
                 break;
         }
     }
