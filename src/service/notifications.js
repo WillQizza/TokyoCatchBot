@@ -6,16 +6,28 @@ class NotificationService {
         this._client = client;
     }
 
+    setAPI(api) {
+        this._api = api;
+    }
+
     async init() {
         await initDatabase();
     }
 
     async registerPlay(id) {
-        const [row] = await Plays.findOrCreate({
+        let row = await Plays.findOne({
             where: {
                 subscription: id
             }
         });
+        if (!row) {
+            const name = await this._api.getName(id)[0].name;
+            row = await Plays.create({
+                name,
+                subscription: id,
+                plays: 0
+            });
+        }
 
         const currentPlayCount = row.plays + 1;
 
@@ -30,7 +42,7 @@ class NotificationService {
         const notifySubscriptionListeners = await this._getSubscriptionsWithAlertCountAt(id, currentPlayCount);
         for (const subscription of notifySubscriptionListeners) {
             const user = await this._client.users.fetch(subscription.userId);
-            await user.send(`\`${id}\` is at ${currentPlayCount} plays!\nThe last winning play count was at ${row.lastWinPlayCount} plays!\n<https://tokyocatch.com/game/${id}>`);
+            await user.send(`\`${id}\` (**${row.name}**) is at ${currentPlayCount} plays!\nThe last winning play count was at ${row.lastWinPlayCount} plays!\n<https://tokyocatch.com/game/${id}>`);
         }
     }
 
@@ -89,7 +101,7 @@ class NotificationService {
             const winningSubscriptionListeners = await this._getSubscriptionsWithAlertCountAt(id, -1);
             for (const subscription of winningSubscriptionListeners) {
                 const user = await this._client.users.fetch(subscription.userId);
-                await user.send(`\`${id}\` was won at ${winningPlayCount} plays just now! (the previous play count was ${oldRecord.lastWinPlayCount} plays)\n<https://tokyocatch.com/game/${id}>`);
+                await user.send(`\`${id}\` (**${oldRecord.name}**) was won at ${winningPlayCount} plays just now! (the previous play count was ${oldRecord.lastWinPlayCount} plays)\n<https://tokyocatch.com/game/${id}>`);
             }
         }
     }

@@ -1,8 +1,10 @@
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
 const { SubscriptionEvent } = require('./data/event');
 const { SubscriptionError } = require('./error/subscription');
 const { WebSocketError } = require('./error/websocket');
 
-const { WS_URL, SUBSCRIPTION_QUERY } = require('./util/constants');
+const { WS_URL, SUBSCRIPTION_QUERY, GRAPH_QL_URL, NAME_QUERY } = require('./util/constants');
 const { WebSocketConnection } = require('./websocket');
 
 class APIClient {
@@ -81,6 +83,32 @@ class APIClient {
             id: `${this._subscriptionCodeToId.get(code)}`,
             type: 'stop'
         });
+    }
+
+    async getName(machineIds = []) {
+        let machines;
+        if (typeof machineIds === 'string') {
+            machines = [machineIds];
+        } else {
+            machines = machineIds;
+        }
+
+        return (await (await fetch(GRAPH_QL_URL, {
+            method: 'POST',
+            body: JSON.stringify(machines.map(id => ({
+                operationName: 'machine',
+                query: NAME_QUERY,
+                variables: {
+                    id
+                }
+            }))),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })).json()).map(({data}) => ({
+            id: data.machine.id,
+            name: data.machine.prize.title
+        }));
     }
     
     async connect() {

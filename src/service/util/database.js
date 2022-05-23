@@ -49,6 +49,10 @@ const Plays = db.define('Plays', {
         allowNull: false,
         primaryKey: true
     },
+    name: {
+        type: DataTypes.CHAR(255),
+        allowNull: false
+    },
     lastWinPlayCount: {
         type: DataTypes.INTEGER,
     },

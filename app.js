@@ -8,6 +8,7 @@ const service = new NotificationService();
 
 service.init().then(() => {
     const apiClient = new APIClient();
+    service.setAPI(apiClient);
 
     apiClient.setEventHandler(async event => {
         try {
