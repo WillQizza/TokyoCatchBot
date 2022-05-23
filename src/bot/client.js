@@ -46,6 +46,14 @@ class DiscordClient extends Client {
                 .setDefaultPermission(true)
                 .setName('unsubscribe-all')
                 .setDescription('Unsubscribe from all machines!')));
+
+            this.guilds.cache.forEach(guild => guild.commands.create(new SlashCommandBuilder()
+                .setDefaultPermission(true)
+                .setName('history')
+                .setDescription('View the win history of a machine!')
+                .addStringOption(option => option.setName('machine_id')
+                    .setDescription('id of the machine found in the url!')
+                    .setRequired(true))));
         });
         this.on('error', console.error);
     }

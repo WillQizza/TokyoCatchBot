@@ -59,11 +59,25 @@ const Plays = db.define('Plays', {
     }
 });
 
+const History = db.define('History', {
+    subscription: {
+        type: DataTypes.CHAR(24),
+        allowNull: false
+    },
+    winCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+});
+
+
 module.exports = {
     SubscribedSubscriptions,
     Plays,
+    History,
     init: async () => {
         await SubscribedSubscriptions.sync();
         await Plays.sync();
+        await History.sync();
     }
 };

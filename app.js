@@ -90,6 +90,13 @@ discordClient.on('interactionCreate', async interaction => {
                     ephemeral: true
                 });
                 break;
+            case 'history':
+                const previousWins = await service.getPreviousWins(machineId);
+                await interaction.reply({
+                    content: `Wins for the machine \`${machineId}\`...\n${previousWins.map(win => `${win} wins`).join('\n')}`,
+                    ephemeral: true
+                });
+                break;
         }
     }
 });

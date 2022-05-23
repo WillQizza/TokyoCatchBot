@@ -1,4 +1,4 @@
-const { Plays, SubscribedSubscriptions, init : initDatabase } = require('./util/database');
+const { Plays, SubscribedSubscriptions, History, init : initDatabase } = require('./util/database');
 
 class NotificationService {
 
@@ -81,6 +81,11 @@ class NotificationService {
                 }
             });
 
+            await History.create({
+                subscription: id,
+                winCount: winningPlayCount
+            });
+
             const winningSubscriptionListeners = await this._getSubscriptionsWithAlertCountAt(id, -1);
             for (const subscription of winningSubscriptionListeners) {
                 const user = await this._client.users.fetch(subscription.userId);
@@ -113,6 +118,14 @@ class NotificationService {
                 userId
             }
         })) > 0;
+    }
+
+    async getPreviousWins(machineId) {
+        return (await History.findAll({
+            where: {
+                subscription: machineId
+            }
+        })).map(row => row.winCount);
     }
 
     async _getSubscriptionsWithAlertCountAt(machineId, count) {
