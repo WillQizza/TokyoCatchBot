@@ -21,7 +21,10 @@ class NotificationService {
             }
         });
         if (!row) {
-            const name = await this._api.getName(id)[0].name;
+            const name = ((await this._api.getName(id)[0]) || {}).name;
+            if (name === null) {
+                console.warn('FAILED TO FIND NAME FOR ' + id);
+            }
             row = await Plays.create({
                 name,
                 subscription: id,
