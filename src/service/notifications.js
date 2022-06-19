@@ -21,10 +21,16 @@ class NotificationService {
             }
         });
         if (!row) {
-            const name = ((await this._api.getName(id)[0]) || {}).name;
-            if (name === null) {
-                console.warn('FAILED TO FIND NAME FOR ' + id);
+            // New machine! Fetch the name.
+            let nameData = (await this._api.getName(id))[0];
+            if (!nameData) {
+                nameData = {
+                    name: 'UNKNOWN MACHINE NAME - CONTACT DEVELOPER'
+                };
+                console.error(`FAILED TO FIND MACHINE NAME FOR ${id}`);
             }
+
+            const { name } = nameData;
             row = await Plays.create({
                 name,
                 subscription: id,

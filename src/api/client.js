@@ -93,7 +93,7 @@ class APIClient {
             machines = machineIds;
         }
 
-        return (await (await fetch(GRAPH_QL_URL, {
+        const rows = await (await fetch(GRAPH_QL_URL, {
             method: 'POST',
             body: JSON.stringify(machines.map(id => ({
                 operationName: 'machine',
@@ -105,7 +105,9 @@ class APIClient {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })).json()).map(({data}) => ({
+        })).json();
+
+        return rows.map(({data}) => ({
             id: data.machine.id,
             name: data.machine.prize.title
         }));
