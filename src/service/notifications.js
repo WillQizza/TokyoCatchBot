@@ -117,9 +117,11 @@ class NotificationService {
 
     async registerSubscription(userId, machineId, alertCount) {
         await SubscribedSubscriptions.findOrCreate({
-            userId,
-            subscription: machineId,
-            alertAtCount: alertCount
+            where: {
+                userId,
+                subscription: machineId,
+                alertAtCount: alertCount
+            }
         });
     }
 
