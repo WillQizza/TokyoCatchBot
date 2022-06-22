@@ -38,7 +38,7 @@ const SubscribedSubscriptions = db.define('SubscribedSubscriptions', {
     indexes: [
         {
             unique: true,
-            fields: ['subscription', 'userId']
+            fields: ['subscription', 'userId', 'alertAtCount']
         }
     ]
 });

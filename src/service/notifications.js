@@ -116,8 +116,7 @@ class NotificationService {
     }
 
     async registerSubscription(userId, machineId, alertCount) {
-        await this.unregisterSubscription(userId, machineId);
-        await SubscribedSubscriptions.create({
+        await SubscribedSubscriptions.findOrCreate({
             userId,
             subscription: machineId,
             alertAtCount: alertCount
