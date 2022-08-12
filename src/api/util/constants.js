@@ -1,6 +1,0 @@
-module.exports = {
-    WS_URL: 'wss://api.tokyocatch.com/subscriptions',
-    GRAPH_QL_URL: 'https://api.tokyocatch.com/graphql',
-    SUBSCRIPTION_QUERY: 'subscription {\n machineStatusChanged {\n id\n status\n currentPlay {\n id\n startedAt\n won\n status\n statusUpdatedAt\n __typename\n }\n currentPlayingUserId\n __typename\n }\n}\n',
-    NAME_QUERY: 'query machine($id: ID!) { machine(id: $id) { id queuesCount isMaintenance isTestMachine isBeginnerMachine machineType connection { stream1 stream2 craneRightTimer craneUpTimer prizeGetTimer number craneSidewaysDirection __typename } status gemsToPlay ticketsToPlay prize { id title imageUrl description dimensions weightInGrams brand { name __typename } categories { id title __typename } __typename } queuedUsers { id profileImageUrl __typename } relatedMachines { id machineType isBeginnerMachine isEligibleForCurrentUser gemsToPlay queuesCount isMaintenance connection { stream1 stream2 __typename } prize { id title imageUrl categories { id title __typename } brand { name __typename } __typename } status __typename } currentPlay { id startedAt won status __typename } currentPlayingUser { id __typename } recentWins { wonAt user { id username profileImageUrl __typename } stream1RecordingUrl __typename } isEligibleForCurrentUser __typename } }'
-};
