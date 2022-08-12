@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
+import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers.js";
 import { CraneCommandInteraction } from "../types.js";
 import { Command } from "./command.js";
 
@@ -6,6 +7,8 @@ const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
 const PLAY_MESSAGE = `**{{NAME}}** is at {{PLAYS}} plays. (\`{{ID}}\` - {{TYPE}})`;
 const PLAY_MESSAGE_WITH_LAST_WIN_COUNT = `${PLAY_MESSAGE}
 The last win was at {{LAST_WIN_COUNT}} plays.`;
+const PLAY_MESSAGE_WITH_LAST_WIN_COUNT_AND_PREDICTION = `${PLAY_MESSAGE_WITH_LAST_WIN_COUNT}
+It is predicted that the next win will be at {{GUESS}} plays. (based on {{HISTORY_LENGTH}} wins)`;
 
 class PlaysCommand extends Command {
 
@@ -32,20 +35,35 @@ class PlaysCommand extends Command {
       });
     }
     
-    const plays = await interaction.client
-      .services.plays.getPlayCount(machine);
-    const lastWinCount = await interaction.client
-      .services.plays.getLastWinCount(machine);
+    const plays = await interaction.client.services.plays.getPlayCount(machine);
+    const lastWinCount = await interaction.client.services.plays.getLastWinCount(machine);
 
     if (lastWinCount > 0) {
-        await interaction.reply({
-            content: PLAY_MESSAGE_WITH_LAST_WIN_COUNT
-              .replace(/{{ID}}/g, machine.id)
-              .replace(/{{NAME}}/g, machine.name)
-              .replace(/{{PLAYS}}/g, plays.toString())
-              .replace(/{{TYPE}}/g, machine.type)
-              .replace(/{{LAST_WIN_COUNT}}/g, lastWinCount.toString())
+      const history = await interaction.client.services.plays.getPreviousWins(machine);
+      const canGuess = machine.type === "THREE_CLAW" && history.length >= 10;
+      if (!canGuess) {
+        // cannot predict with the data/machine given
+        return interaction.reply({
+          content: PLAY_MESSAGE_WITH_LAST_WIN_COUNT
+            .replace(/{{ID}}/g, machine.id)
+            .replace(/{{NAME}}/g, machine.name)
+            .replace(/{{PLAYS}}/g, plays.toString())
+            .replace(/{{TYPE}}/g, machine.type)
+            .replace(/{{LAST_WIN_COUNT}}/g, lastWinCount.toString())
         });
+      }
+
+      // can attempt to predict win
+      return interaction.reply({
+        content: PLAY_MESSAGE_WITH_LAST_WIN_COUNT_AND_PREDICTION
+          .replace(/{{ID}}/g, machine.id)
+          .replace(/{{NAME}}/g, machine.name)
+          .replace(/{{PLAYS}}/g, plays.toString())
+          .replace(/{{TYPE}}/g, machine.type)
+          .replace(/{{LAST_WIN_COUNT}}/g, lastWinCount.toString())
+          .replace(/{{GUESS}}/g, findMedianWithoutOutliers(history).toString())
+          .replace(/{{HISTORY_LENGTH}}/g, history.length.toString())
+      });
     } else {
         await interaction.reply({
             content: PLAY_MESSAGE

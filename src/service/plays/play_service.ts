@@ -1,6 +1,6 @@
 import EventEmitter from "events";
 import { Model } from "sequelize/types";
-import { History, Plays } from "../../database/index.js";
+import { database, History, Plays } from "../../database/index.js";
 import { MachineInformation } from "../api/index.js";
 import { MachinePlayData } from "./types.js";
 
@@ -89,7 +89,8 @@ export class PlaysService extends EventEmitter {
     return (await History.findAll({
         where: {
             subscription: machine.id
-        }
+        },
+        order: database.literal("createdAt DESC")
     })).map(row => row["winCount"]);
 }
 

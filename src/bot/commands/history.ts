@@ -32,7 +32,8 @@ class HistoryCommand extends Command {
       });
     }
 
-    const history = await interaction.client.services.plays.getPreviousWins(machine);
+    const history = (await interaction.client.services.plays.getPreviousWins(machine))
+      .slice(0, 20);
 
     await interaction.reply({
       content: HISTORY_MESSAGE
