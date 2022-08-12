@@ -6,7 +6,10 @@ export const DATABASE_HOST = process.env.DATABASE_HOST;
 export const DATABASE_PORT = parseInt(process.env.DATABASE_PORT);
 export const DATABASE_USERNAME = process.env.DATABASE_USERNAME;
 export const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
+
 export const BOT_TOKEN = process.env.BOT_TOKEN;
+export const MIN_WIN_GUESS_COUNT = 10;
+export const CLOSE_ENOUGH_TO_WIN_COUNT = 5;
 
 export const WS_URL = "wss://api.tokyocatch.com/subscriptions";
 export const GRAPHQL_URL = "https://api.tokyocatch.com/graphql";

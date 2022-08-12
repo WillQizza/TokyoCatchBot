@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
+import { MIN_WIN_GUESS_COUNT } from "../../utils/constants.js";
 import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers.js";
 import { CraneCommandInteraction } from "../types.js";
 import { Command } from "./command.js";
@@ -44,7 +45,7 @@ class GuessWinCommand extends Command {
     }
     
     const wins = await interaction.client.services.plays.getPreviousWins(machine);
-    if (wins.length < 10) {
+    if (wins.length < MIN_WIN_GUESS_COUNT) {
       return interaction.reply({
         content: TOO_EARLY_MESSAGE
           .replace(/{{NAME}}/g, machine.name)

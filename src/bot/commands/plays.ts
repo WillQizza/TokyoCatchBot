@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
+import { MIN_WIN_GUESS_COUNT } from "../../utils/constants.js";
 import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers.js";
 import { CraneCommandInteraction } from "../types.js";
 import { Command } from "./command.js";
@@ -40,7 +41,7 @@ class PlaysCommand extends Command {
 
     if (lastWinCount > 0) {
       const history = await interaction.client.services.plays.getPreviousWins(machine);
-      const canGuess = machine.type === "THREE_CLAW" && history.length >= 10;
+      const canGuess = machine.type === "THREE_CLAW" && history.length >= MIN_WIN_GUESS_COUNT;
       if (!canGuess) {
         // cannot predict with the data/machine given
         return interaction.reply({
