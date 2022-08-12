@@ -54,6 +54,7 @@ export class DiscordClient extends Client {
         .filter(commandFileName => commandFileName !== "command.js")  // filter out command.ts
         .map(commandFileName => import(path.join(__dirname, "commands", commandFileName))));
 
+      await this.application.commands.set([]);
       await this.application.commands.set(commandModules.map(commandModule => {
         const commandDefinition = commandModule.default as Command;
         this.commands.set(commandDefinition.json.name, commandDefinition);
