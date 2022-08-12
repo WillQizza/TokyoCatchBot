@@ -49,11 +49,14 @@ export class DiscordClient extends Client {
       this.services.plays.on("play", this.onPlay);
       this.services.plays.on("win", this.onWin);
 
+      // Clear old commands
+      this.application.commands.cache.forEach(command => this.application.commands.delete(command));
+
       // Load commands
       const commandModules = await Promise.all(fs.readdirSync(path.join(__dirname, "commands"))
         .filter(commandFileName => commandFileName !== "command.js")  // filter out command.ts
         .map(commandFileName => import(path.join(__dirname, "commands", commandFileName))));
-      
+
       for (const commandModule of commandModules) {
         const commandDefinition = commandModule.default as Command;
         this.commands.set(commandDefinition.json.name, commandDefinition);
