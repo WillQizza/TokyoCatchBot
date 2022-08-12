@@ -7,7 +7,7 @@ import { Command } from "./commands/command.js";
 
 const ON_PLAY_MESSAGE = `"{{NAME}}" (\`{{ID}}\`) is at {{PLAY_COUNT}} plays!
 The last winning play was at {{LAST_WINNING_PLAY}} plays!
-https://tokyocatch.com/game/{{ID}}`;
+<https://tokyocatch.com/game/{{ID}}>`;
 
 const ON_WIN_MESSAGE = `"{{NAME}}" (\`{{ID}}\`) was won at {{PLAYS}} plays just now!
 The last winning play was at {{LAST_WINNING_PLAY}} plays`;
@@ -49,20 +49,18 @@ export class DiscordClient extends Client {
       this.services.plays.on("play", this.onPlay);
       this.services.plays.on("win", this.onWin);
 
-      // Clear old commands
-      this.application.commands.cache.forEach(command => this.application.commands.delete(command));
-
       // Load commands
       const commandModules = await Promise.all(fs.readdirSync(path.join(__dirname, "commands"))
         .filter(commandFileName => commandFileName !== "command.js")  // filter out command.ts
         .map(commandFileName => import(path.join(__dirname, "commands", commandFileName))));
 
-      for (const commandModule of commandModules) {
+      await this.application.commands.set(commandModules.map(commandModule => {
         const commandDefinition = commandModule.default as Command;
         this.commands.set(commandDefinition.json.name, commandDefinition);
+        
+        return commandDefinition.json;
+      }));
 
-        await this.application.commands.create(commandDefinition.json);
-      }
     });
 
     this.on("interactionCreate", this.onInteraction);

@@ -12,7 +12,7 @@ const RESULT_MESSAGE = `These three prong machines are close to winning!
 {{MACHINES}}`;
 const MACHINE_ROW_MESSAGE = `**{{NAME}}** [{{PLAYS}} plays] [projected to win at {{GUESS}} plays] <https://tokyocatch.com/game/{{ID}}>`;
 
-const GET_HISTORY_OF_MACHINES_OVER_MIN_COUNT = `SELECT subscription machineId, winCount FROM histories HAVING (COUNT((SELECT subscription FROM histories WHERE machineId = histories.subscription))) > ${MIN_WIN_GUESS_COUNT}`;
+const GET_HISTORY_OF_MACHINES_OVER_MIN_COUNT = `SELECT subscription machineId, winCount FROM Histories HAVING (COUNT((SELECT subscription FROM histories WHERE machineId = histories.subscription))) > ${MIN_WIN_GUESS_COUNT}`;
 
 
 class WinListCommand extends Command {
@@ -64,7 +64,7 @@ class WinListCommand extends Command {
 
     await interaction.editReply({
       content: RESULT_MESSAGE
-        .replace(/{{MACHINES}}/g, machinesThatMightWin.map(data => 
+        .replace(/{{MACHINES}}/g, machinesThatMightWin.slice(0, 40).map(data => 
           MACHINE_ROW_MESSAGE
             .replace(/{{NAME}}/g, data.machine.name)
             .replace(/{{ID}}/g, data.machine.id)
