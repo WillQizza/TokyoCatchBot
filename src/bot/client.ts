@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { Client, Interaction, InteractionType, Routes } from "discord.js";
+import { Client, Interaction, InteractionType } from "discord.js";
 import { MachinePlayData } from "../service/plays/index.js";
 import { CraneClientOptions, CraneCommandInteraction, CraneServices } from "./types.js";
 import { Command } from "./commands/command.js";
@@ -54,14 +54,12 @@ export class DiscordClient extends Client {
         .filter(commandFileName => commandFileName !== "command.js")  // filter out command.ts
         .map(commandFileName => import(path.join(__dirname, "commands", commandFileName))));
 
-      await this.rest.put(Routes.applicationCommands(this.application.id), { body: [] });
-      await this.application.commands.set(commandModules.map(commandModule => {
+      for (const commandModule of commandModules) {
         const commandDefinition = commandModule.default as Command;
         this.commands.set(commandDefinition.json.name, commandDefinition);
-        
-        return commandDefinition.json;
-      }));
 
+        await this.application.commands.create(commandDefinition.json);
+      }
     });
 
     this.on("interactionCreate", this.onInteraction);
