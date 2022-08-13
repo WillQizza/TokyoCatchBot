@@ -1,5 +1,5 @@
 export function findMedianWithoutOutliers(input: number[]) {
-  input.sort();
+  input.sort((a, b) => a - b);
 
   // Find quartiles
   const q1 = input[Math.floor(input.length / 4)];
