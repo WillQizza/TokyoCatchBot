@@ -82,7 +82,7 @@ export class PlaysService extends EventEmitter {
         return 0;
     }
 
-    return row["plays"];
+    return row["lastWinPlayCount"];
   }
 
   async getPreviousWins(machine: MachineInformation): Promise<{ plays: number, unixTimestamp: number }[]> {
