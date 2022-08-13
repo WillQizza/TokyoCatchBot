@@ -12,7 +12,7 @@ const RESULT_MESSAGE = `These three prong machines are close to winning!
 {{MACHINES}}`;
 const MACHINE_ROW_MESSAGE = `**{{NAME}}** [{{PLAYS}} plays] [projected to win at {{GUESS}} plays] <https://tokyocatch.com/game/{{ID}}>`;
 
-const GET_HISTORY_OF_MACHINES_OVER_MIN_COUNT = `SELECT subscription machineId, winCount FROM Histories HAVING (COUNT((SELECT subscription FROM Histories WHERE machineId = Histories.subscription))) > ${MIN_WIN_GUESS_COUNT}`;
+const GET_HISTORY_OF_MACHINES_OVER_MIN_COUNT = `SELECT subscription machineId, winCount FROM Histories WHERE subscription IN (SELECT subscription FROM Histories GROUP BY subscription HAVING COUNT(*) >= ${MIN_WIN_GUESS_COUNT});`;
 
 
 class WinListCommand extends Command {
