@@ -3,8 +3,8 @@ import { CraneCommandInteraction } from "../types.js";
 import { Command } from "./command.js";
 
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
-const UNSUBSCRIBE_SUCCESS = `You are no longer subscribed to **{{NAME}}** (\`{{ID}}\` - {{TYPE}})`;
-const UNSUBSCRIBE_FAILED = `You were not subscribed to **{{NAME}}** (\`{{ID}}\` - {{TYPE}})`;
+const UNSUBSCRIBE_SUCCESS = `You are no longer subscribed to **{{NAME}}** (\`{{ID}}\`)`;
+const UNSUBSCRIBE_FAILED = `You were not subscribed to **{{NAME}}** (\`{{ID}}\`)`;
 
 class UnsubscribeCommand extends Command {
 

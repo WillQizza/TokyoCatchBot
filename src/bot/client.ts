@@ -46,8 +46,8 @@ export class DiscordClient extends Client {
 
     this.on("error", console.error);
     this.on("ready", async () => {
-      this.services.plays.on("play", this.onPlay);
-      this.services.plays.on("win", this.onWin);
+      this.services.plays.on("play", play => this.onPlay(play));
+      this.services.plays.on("win", win => this.onWin(win));
 
       // Load commands
       const commandModules = await Promise.all(fs.readdirSync(path.join(__dirname, "commands"))

@@ -37,7 +37,7 @@ export class APIService extends EventEmitter {
   }
 
   async connect() {
-    this.on("connect", () => {
+    this.ws.on("connect", () => {
       this.ws.send({
         type: 'connection_init',
         payload: {

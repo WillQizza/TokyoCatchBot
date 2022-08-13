@@ -5,7 +5,7 @@ import { CraneCommandInteraction } from "../types.js";
 import { Command } from "./command.js";
 
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
-const PLAY_MESSAGE = `**{{NAME}}** is at {{PLAYS}} plays. (\`{{ID}}\` - {{TYPE}})`;
+const PLAY_MESSAGE = `**{{NAME}}** is at {{PLAYS}} plays. (\`{{ID}}\`)`;
 const PLAY_MESSAGE_WITH_LAST_WIN_COUNT = `${PLAY_MESSAGE}
 The last win was at {{LAST_WIN_COUNT}} plays.`;
 const PLAY_MESSAGE_WITH_LAST_WIN_COUNT_AND_PREDICTION = `${PLAY_MESSAGE_WITH_LAST_WIN_COUNT}

@@ -5,9 +5,9 @@ import { CraneCommandInteraction } from "../types.js";
 import { Command } from "./command.js";
 
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
-const GUESS_MESSAGE = `**{{NAME}}** is predicted to win around {{GUESS}} plays based on {{HISTORY_LENGTH}} wins. (\`{{ID}}\` - {{TYPE}})`;
-const TOO_EARLY_MESSAGE = `It's too early to make a guess for **{{NAME}}** (\`{{ID}}\` - {{TYPE}})`;
-const NOT_THREE_PRONG_MESSAGE = `**{{NAME}}** is not a three prong machine! (\`{{ID}}\` - {{TYPE}})`;
+const GUESS_MESSAGE = `**{{NAME}}** is predicted to win around {{GUESS}} plays based on {{HISTORY_LENGTH}} wins. (\`{{ID}}\`)`;
+const TOO_EARLY_MESSAGE = `It's too early to make a guess for **{{NAME}}** (\`{{ID}}\`)`;
+const NOT_THREE_PRONG_MESSAGE = `**{{NAME}}** is not a three prong machine! (\`{{ID}}\`)`;
 
 class GuessWinCommand extends Command {
 
