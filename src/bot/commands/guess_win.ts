@@ -60,7 +60,7 @@ class GuessWinCommand extends Command {
         .replace(/{{NAME}}/g, machine.name)
         .replace(/{{ID}}/g, machine.id)
         .replace(/{{TYPE}}/g, machine.type)
-        .replace(/{{GUESS}}/g, findMedianWithoutOutliers(wins).toString())
+        .replace(/{{GUESS}}/g, findMedianWithoutOutliers(wins.map(w => w.plays)).toString())
         .replace(/{{HISTORY_LENGTH}}/g, wins.length.toString())
     });
   }

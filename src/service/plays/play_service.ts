@@ -85,13 +85,16 @@ export class PlaysService extends EventEmitter {
     return row["plays"];
   }
 
-  async getPreviousWins(machine: MachineInformation): Promise<number[]> {
+  async getPreviousWins(machine: MachineInformation): Promise<{ plays: number, unixTimestamp: number }[]> {
     return (await History.findAll({
         where: {
             subscription: machine.id
         },
         order: database.literal("createdAt DESC")
-    })).map(row => row["winCount"]);
+    })).map(row => ({
+      plays: row["winCount"],
+      unixTimestamp: Math.floor(row["createdAt"].getTime() / 1000)
+    }));
 }
 
   // Deletes play and history rows if machine name no longer matches

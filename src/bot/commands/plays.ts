@@ -62,7 +62,7 @@ class PlaysCommand extends Command {
           .replace(/{{PLAYS}}/g, plays.toString())
           .replace(/{{TYPE}}/g, machine.type)
           .replace(/{{LAST_WIN_COUNT}}/g, lastWinCount.toString())
-          .replace(/{{GUESS}}/g, findMedianWithoutOutliers(history).toString())
+          .replace(/{{GUESS}}/g, findMedianWithoutOutliers(history.map(w => w.plays)).toString())
           .replace(/{{HISTORY_LENGTH}}/g, history.length.toString())
       });
     } else {
