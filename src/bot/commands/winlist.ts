@@ -64,7 +64,7 @@ class WinListCommand extends Command {
 
     await interaction.editReply({
       content: RESULT_MESSAGE
-        .replace(/{{MACHINES}}/g, machinesThatMightWin.slice(0, 40).map(data => 
+        .replace(/{{MACHINES}}/g, machinesThatMightWin.slice(0, 40).reverse().map(data => 
           MACHINE_ROW_MESSAGE
             .replace(/{{NAME}}/g, data.machine.name)
             .replace(/{{ID}}/g, data.machine.id)
