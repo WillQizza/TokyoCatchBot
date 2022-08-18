@@ -40,7 +40,7 @@ class HistoryCommand extends Command {
         .replace(/{{NAME}}/g, machine.name)
         .replace(/{{ID}}/g, machine.id)
         .replace(/{{TYPE}}/g, machine.type)
-        .replace(/{{HISTORY}}/g, history.map(data => `${data.plays} plays (<t:${data.unixTimestamp}:R>)`).join("\n")),
+        .replace(/{{HISTORY}}/g, history.reverse().map(data => `${data.plays} plays (<t:${data.unixTimestamp}:R>)`).join("\n")),
       ephemeral: true
     });
   }
