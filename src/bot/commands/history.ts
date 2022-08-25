@@ -5,7 +5,9 @@ import { Command } from "./command.js";
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
 const HISTORY_MESSAGE = `**{{NAME}}** (\`{{ID}}\`)
 ======
-{{HISTORY}}`;
+{{HISTORY}}
+
+The machine is currently at {{PLAYS}} plays.`;
 
 class HistoryCommand extends Command {
 
@@ -35,12 +37,15 @@ class HistoryCommand extends Command {
     const history = (await interaction.client.services.plays.getPreviousWins(machine))
       .slice(0, 20);
 
+    const currentPlays = await interaction.client.services.plays.getPlayCount(machine);
+
     await interaction.reply({
       content: HISTORY_MESSAGE
         .replace(/{{NAME}}/g, machine.name)
         .replace(/{{ID}}/g, machine.id)
         .replace(/{{TYPE}}/g, machine.type)
-        .replace(/{{HISTORY}}/g, history.reverse().map(data => `${data.plays} plays (<t:${data.unixTimestamp}:R>)`).join("\n")),
+        .replace(/{{HISTORY}}/g, history.reverse().map(data => `${data.plays} plays (<t:${data.unixTimestamp}:R>)`).join("\n"))
+        .replace(/{{PLAYS}}/g, currentPlays.toString()),
       ephemeral: true
     });
   }
