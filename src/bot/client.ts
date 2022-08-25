@@ -88,6 +88,7 @@ export class DiscordClient extends Client {
         await user.send(ON_WIN_MESSAGE
           .replace(/{{NAME}}/g, machineInformation.name)
           .replace(/{{ID}}/g, machineInformation.id)
+          .replace(/{{PLAYS}}/g, machineInformation.playCount.toString())
           .replace(/{{LAST_WINNING_PLAY}}/g, (machineInformation.lastWinCount || "N/A").toString()));
       } catch (error) {
         console.error(error);
