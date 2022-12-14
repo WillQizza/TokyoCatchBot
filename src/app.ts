@@ -1,10 +1,10 @@
 import { IntentsBitField } from "discord.js";
 
-import { PlaysService, SubscriptionService } from "./service/plays/index.js";
-import { DiscordClient } from "./bot/index.js";
-import { APIMachineEvent, APIService } from "./service/api/index.js";
-import { init } from "./database/index.js";
-import { BOT_TOKEN } from "./utils/constants.js";
+import { PlaysService, SubscriptionService } from "./service/plays/index";
+import { DiscordClient } from "./bot/index";
+import { APIMachineEvent, APIService } from "./service/api/index";
+import { init } from "./database/index";
+import { BOT_TOKEN } from "./utils/constants";
 
 // Load database before any services
 init().then(async () => {

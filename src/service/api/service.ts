@@ -2,9 +2,9 @@ import EventEmitter from "events";
 import fetch from "node-fetch";
 import { schedule } from "node-cron";
 
-import { GRAPHQL_URL, MACHINES_QUERY, MACHINE_QUERY, SUBSCRIPTION_QUERY, WS_URL } from "../../utils/constants.js";
-import { TokyoCatchSocket } from "./socket.js";
-import { APIMachineEvent, MachineInformation } from "./types.js";
+import { GRAPHQL_URL, MACHINES_QUERY, MACHINE_QUERY, SUBSCRIPTION_QUERY, WS_URL } from "../../utils/constants";
+import { TokyoCatchSocket } from "./socket";
+import { APIMachineEvent, MachineInformation } from "./types";
 
 export class APIService extends EventEmitter {
 
@@ -127,7 +127,8 @@ export class APIService extends EventEmitter {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-web-version': '0280861'
       }
     })).json();
 

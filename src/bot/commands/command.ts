@@ -1,5 +1,5 @@
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord.js";
-import { CraneCommandInteraction } from "../types.js";
+import { CraneCommandInteraction } from "../types";
 
 export abstract class Command {
   

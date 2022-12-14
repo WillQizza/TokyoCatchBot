@@ -1,8 +1,8 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
-import { MIN_WIN_GUESS_COUNT } from "../../utils/constants.js";
-import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers.js";
-import { CraneCommandInteraction } from "../types.js";
-import { Command } from "./command.js";
+import { MIN_WIN_GUESS_COUNT } from "../../utils/constants";
+import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers";
+import { CraneCommandInteraction } from "../types";
+import { Command } from "./command";
 
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
 const PLAY_MESSAGE = `**{{NAME}}** is at {{PLAYS}} plays. (\`{{ID}}\`)`;

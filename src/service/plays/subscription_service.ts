@@ -1,5 +1,5 @@
-import { SubscribedSubscriptions } from "../../database/index.js";
-import { MachineInformation } from "../api/index.js";
+import { SubscribedSubscriptions } from "../../database/index";
+import { MachineInformation } from "../api/index";
 
 export class SubscriptionService {
 

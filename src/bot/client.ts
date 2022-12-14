@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { Client, Interaction, InteractionType } from "discord.js";
-import { MachinePlayData } from "../service/plays/index.js";
-import { CraneClientOptions, CraneCommandInteraction, CraneServices } from "./types.js";
-import { Command } from "./commands/command.js";
+import { MachinePlayData } from "../service/plays/index";
+import { CraneClientOptions, CraneCommandInteraction, CraneServices } from "./types";
+import { Command } from "./commands/command";
 
 const ON_PLAY_MESSAGE = `"{{NAME}}" (\`{{ID}}\`) is at {{PLAY_COUNT}} plays!
 The last winning play was at {{LAST_WINNING_PLAY}} plays!
@@ -51,7 +51,7 @@ export class DiscordClient extends Client {
 
       // Load commands
       const commandModules = await Promise.all(fs.readdirSync(path.join(__dirname, "commands"))
-        .filter(commandFileName => commandFileName !== "command.js")  // filter out command.ts
+        .filter(commandFileName => !commandFileName.startsWith("command"))  // filter out command.ts
         .map(commandFileName => import(path.join(__dirname, "commands", commandFileName))));
 
       for (const commandModule of commandModules) {

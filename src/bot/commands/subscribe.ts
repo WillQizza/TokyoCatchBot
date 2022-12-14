@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandIntegerOption, SlashCommandStringOption } from "discord.js";
-import { CraneCommandInteraction } from "../types.js";
-import { Command } from "./command.js";
+import { CraneCommandInteraction } from "../types";
+import { Command } from "./command";
 
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
 const DM_ON_WIN = `You will be DMed when **{{NAME}}** wins! (\`{{ID}}\` - {{TYPE}})`;

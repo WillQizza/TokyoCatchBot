@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
-import { CraneCommandInteraction } from "../types.js";
-import { Command } from "./command.js";
+import { CraneCommandInteraction } from "../types";
+import { Command } from "./command";
 
 const UNSUBSCRIBE_SUCCESS = `You are no longer subscribed to ANY machines!`;
 

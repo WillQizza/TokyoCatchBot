@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
-import { CraneCommandInteraction } from "../types.js";
-import { Command } from "./command.js";
+import { CraneCommandInteraction } from "../types";
+import { Command } from "./command";
 
 const INVALID_MACHINE = `\`{{ID}}\` is not a valid machine id.`;
 const UNSUBSCRIBE_SUCCESS = `You are no longer subscribed to **{{NAME}}** (\`{{ID}}\`)`;

@@ -1,3 +1,3 @@
-export * from "./play_service.js";
-export * from "./subscription_service.js";
-export * from "./types.js";
+export * from "./play_service";
+export * from "./subscription_service";
+export * from "./types";

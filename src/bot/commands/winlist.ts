@@ -1,19 +1,19 @@
 import { SlashCommandBuilder } from "discord.js";
-import { database } from "../../database/index.js";
-import { MachineInformation } from "../../service/api/types.js";
-import { CLOSE_ENOUGH_TO_WIN_COUNT, MIN_WIN_GUESS_COUNT } from "../../utils/constants.js";
-import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers.js";
-import { CraneCommandInteraction } from "../types.js";
-import { Command } from "./command.js";
+import { database } from "../../database/index";
+import { MachineInformation } from "../../service/api/types";
+import { CLOSE_ENOUGH_TO_WIN_COUNT, MIN_WIN_GUESS_COUNT } from "../../utils/constants";
+import { findMedianWithoutOutliers } from "../../utils/findMedianWithoutOutliers";
+import { CraneCommandInteraction } from "../types";
+import { Command } from "./command";
 
 const HOLD_MESSAGE = `Please hold... this might take a bit!`;
-const RESULT_MESSAGE = `These three prong machines are close to winning!
-=====
-{{MACHINES}}`;
+const HEADER_RESULT_MESSAGE = `These three prong machines are close to winning!
+=====`;
 const MACHINE_ROW_MESSAGE = `**{{NAME}}** [{{PLAYS}} plays] [projected to win at {{GUESS}} plays] <https://tokyocatch.com/game/{{ID}}>`;
 
 const GET_HISTORY_OF_MACHINES_OVER_MIN_COUNT = `SELECT subscription machineId, winCount FROM Histories WHERE subscription IN (SELECT subscription FROM Histories GROUP BY subscription HAVING COUNT(*) >= ${MIN_WIN_GUESS_COUNT});`;
 
+const MACHINES_PER_MESSAGE = 10;
 
 class WinListCommand extends Command {
 
@@ -63,16 +63,20 @@ class WinListCommand extends Command {
     }
 
     await interaction.editReply({
-      content: RESULT_MESSAGE
-        .replace(/{{MACHINES}}/g, machinesThatMightWin.slice(0, 40).map(data => 
-          MACHINE_ROW_MESSAGE
-            .replace(/{{NAME}}/g, data.machine.name)
-            .replace(/{{ID}}/g, data.machine.id)
-            .replace(/{{PLAYS}}/g, data.currentPlayCount.toString())
-            .replace(/{{GUESS}}/g, data.guess.toString())
-          ).join("\n")
-        )
+      content: HEADER_RESULT_MESSAGE
     });
+    
+    for (let i = 0; i < Math.ceil(machinesThatMightWin.length / MACHINES_PER_MESSAGE); i++) {
+      const machines = machinesThatMightWin.slice(i * MACHINES_PER_MESSAGE, i * MACHINES_PER_MESSAGE + MACHINES_PER_MESSAGE);
+      
+      await interaction.channel.send(machines.map(data => 
+        MACHINE_ROW_MESSAGE
+          .replace(/{{NAME}}/g, data.machine.name)
+          .replace(/{{ID}}/g, data.machine.id)
+          .replace(/{{PLAYS}}/g, data.currentPlayCount.toString())
+          .replace(/{{GUESS}}/g, data.guess.toString())
+        ).join("\n"));
+    }
   }
 
 }

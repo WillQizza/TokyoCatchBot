@@ -1,8 +1,8 @@
 import EventEmitter from "events";
 import { Model } from "sequelize/types";
-import { database, History, Plays } from "../../database/index.js";
-import { MachineInformation } from "../api/index.js";
-import { MachinePlayData } from "./types.js";
+import { database, History, Plays } from "../../database/index";
+import { MachineInformation } from "../api/index";
+import { MachinePlayData } from "./types";
 
 export class PlaysService extends EventEmitter {
 
