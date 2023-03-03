@@ -79,7 +79,7 @@ export class APIService extends EventEmitter {
       }
     ]);
 
-    const { data } = row;
+    const { data } = row[0];
     if (!data) {
       return null;
     }
