@@ -1,4 +1,4 @@
-import { IntentsBitField } from "discord.js";
+import { IntentsBitField, Partials } from "discord.js";
 
 import { PlaysService, SubscriptionService } from "./service/plays/index";
 import { DiscordClient } from "./bot/index";
@@ -37,6 +37,10 @@ init().then(async () => {
       subscriptions: subscriptionService,
       api: apiService
     },
+    partials: [
+      Partials.User,
+      Partials.Channel
+    ],
     intents: [ IntentsBitField.Flags.Guilds, IntentsBitField.Flags.DirectMessages ]
   });
 

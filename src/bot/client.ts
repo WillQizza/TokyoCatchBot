@@ -57,9 +57,8 @@ export class DiscordClient extends Client {
       for (const commandModule of commandModules) {
         const commandDefinition = commandModule.default as Command;
         this.commands.set(commandDefinition.json.name, commandDefinition);
-
-        await this.application.commands.create(commandDefinition.json);
       }
+      await this.application.commands.set(commandModules.map(m => (m.default as Command).json));
     });
 
     this.on("interactionCreate", this.onInteraction);

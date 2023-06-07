@@ -65,7 +65,7 @@ class WinListCommand extends Command {
     await interaction.editReply({
       content: HEADER_RESULT_MESSAGE
     });
-    
+
     for (let i = 0; i < Math.ceil(machinesThatMightWin.length / MACHINES_PER_MESSAGE); i++) {
       const machines = machinesThatMightWin.slice(i * MACHINES_PER_MESSAGE, i * MACHINES_PER_MESSAGE + MACHINES_PER_MESSAGE);
       
