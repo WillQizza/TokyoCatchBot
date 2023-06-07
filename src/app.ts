@@ -37,7 +37,7 @@ init().then(async () => {
       subscriptions: subscriptionService,
       api: apiService
     },
-    intents: [ IntentsBitField.Flags.Guilds ]
+    intents: [ IntentsBitField.Flags.Guilds, IntentsBitField.Flags.DirectMessages ]
   });
 
   await apiService.connect();
