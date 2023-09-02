@@ -25,13 +25,13 @@
     "mariadb": "^3.0.0",
     "node-cron": "^3.0.1",
     "node-fetch": "^2.6.7",
-    "sequelize": "^6.19.0",
+    "sequelize": "^6.32.1",
     "ws": "^8.6.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.1",
     "@types/node-cron": "^3.0.2",
     "nodemon": "^2.0.19",
-    "typescript": "^4.7.4"
+    "typescript": "5.1.3"
   }
 }
