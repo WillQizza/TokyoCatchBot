@@ -1,0 +1,30 @@
+name: Docker Registry Deployment
+on:
+  push:
+    branches: [master]
+
+concurrency:
+  group: "docker"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: docker
+    steps:
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.willqi.dev
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build & Push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: registry.willqi.dev/public-portfolio:1
