@@ -23,7 +23,7 @@ export const SubscribedSubscriptions = database.define('SubscribedSubscriptions'
       autoIncrement: true
   },
   subscription: {
-      type: DataTypes.CHAR(24),
+      type: DataTypes.CHAR(49),
       allowNull: false
   },
   userId: {
@@ -45,7 +45,7 @@ export const SubscribedSubscriptions = database.define('SubscribedSubscriptions'
 
 export const Plays = database.define('Plays', {
   subscription: {
-      type: DataTypes.CHAR(24),
+      type: DataTypes.CHAR(49),
       allowNull: false,
       primaryKey: true
   },
@@ -65,7 +65,7 @@ export const Plays = database.define('Plays', {
 
 export const History = database.define('History', {
   subscription: {
-      type: DataTypes.CHAR(24),
+      type: DataTypes.CHAR(49),
       allowNull: false
   },
   winCount: {
