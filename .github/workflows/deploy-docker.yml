@@ -2,6 +2,7 @@ name: Docker Registry Deployment
 on:
   push:
     branches: [master]
+  workflow_dispatch:
 
 concurrency:
   group: "docker"
